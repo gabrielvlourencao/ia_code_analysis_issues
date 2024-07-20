@@ -3,18 +3,21 @@ import readline from 'readline';
 import path from 'path';
 import JiraClient from 'jira-connector';
 import OpenAI from "openai";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const openai = new OpenAI({
-  apiKey: "sk-proj-B5Tgv7BuolgmjSJftQuAT3BlbkFJJvioGxDmgVKZnel9YZhl",
-  organization: "org-7kWGNarTdujkJKY1S35gaVdW",
-  projectKey: "proj_92sCysBTh2cYQeSxDyMZlyHn",
+  apiKey: process.env.OPENAI_API_KEY,
+  organization: process.env.OPENAI_ORG,
+  projectKey: process.env.OPENAI_PROJECT_KEY,
 });
 
 const jira = new JiraClient({
-  host: 'neway.atlassian.net',
+  host: process.env.JIRA_HOST,
   basic_auth: {
-    email: 'gabriel.vlourencao@hotmail.com',
-    api_token: 'ATATT3xFfGF0cVxKn-LFgT_Po1eqihQwtNpAhXN64DCkH5Rk0SssT75GvI_G5Kb5lF-Su8Uq6b886akH3hsq5LNYY0wu7cU9ZMK2A4jS63MtUr_GfGC3KOGd1ETT4cUb9JB8p-s58oBxG7nsCdiIU0iLX3YrwZabl7hL9IA6CIdRtGVNRqHoF-M=A67C56FA'
+    email: process.env.JIRA_EMAIL,
+    api_token: process.env.JIRA_API_TOKEN
   }
 });
 
@@ -32,7 +35,7 @@ async function readRepoFiles(localPath, wishedFile) {
 
     if (stats.isFile() && file === wishedFile) {
       wishedFileContent = await fs.readFile(filePath, 'utf-8');
-      console.log(`Lendo onteúdo do arquivo ${file}:`);
+      console.log(`Lendo conteúdo do arquivo ${file}:`);
       console.log('-----------------------------------');
       // console.log(wishedFileContent);
       // console.log('-----------------------------------');
@@ -90,6 +93,7 @@ async function createJiraIssue(projectKey, summary, description) {
   return issueUrl;
 }
 
+
 async function main() {
   console.log('Iniciando processo...');
 
@@ -109,7 +113,7 @@ async function main() {
       const prompt = await new Promise((resolve) => {
         rl.question('Digite o prompt que deseja perguntar a IA: ', async (text) => {
           resolve(text);
-        })
+        });
       });
 
       const fileContents = await readRepoFiles(localPath, wishedFile);
