@@ -52,10 +52,10 @@ node your-script-file.js
 ````
 ## During execution, you will be prompted to:
 
-Enter the repository path.
-Enter the name of the file to be analyzed (e.g., OrdersController.cs).
-Enter the prompt for AI analysis.
-The script will then read the file, analyze its content with OpenAI, and create a Jira issue with the analysis results. A link to the created Jira issue will be provided.
+- Enter the repository path.
+- Enter the name of the file to be analyzed (e.g., OrdersController.cs).
+- Enter the prompt for AI analysis.
+- The script will then read the file, analyze its content with OpenAI, and create a Jira issue with the analysis results. A link to the created Jira issue will be provided.
 
 ## Contributing
 Feel free to submit issues and enhancement requests.
